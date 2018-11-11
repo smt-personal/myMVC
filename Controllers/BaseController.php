@@ -3,8 +3,19 @@
 
 class BaseController{
 
-	public function __construct(){
+	protected $baseFolder;
 
+	public function __construct(){
+		
+		$this->baseFolder =  $_SERVER['SCRIPT_NAME'];
+	}
+
+	public function index(){
+		$this->loadView("welcome");
+	}
+
+	public function error(){
+		$this->loadView("404error");
 	}
 
 	public function loadView($path){

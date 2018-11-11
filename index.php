@@ -9,22 +9,27 @@ error_reporting(E_ALL);
 
 $reqArr = explode("/", $_SERVER['REQUEST_URI']);
 array_shift($reqArr);
-array_shift($reqArr);
+$appFolder = array_shift($reqArr);
 if(count($reqArr) > 0){	
 
 	$class = $reqArr[0];
-	if(is_object($class)){
-		@include('Controllers/'.$class.'.php');
-		$test = new $class();
+	@include('Controllers/'.$class.'.php');
+	$obj = null;
+	if(class_exists($class)){
+		$obj = new $class();
+	}
 
+	if(is_object($obj)){
 		if(count($reqArr) > 1){
 			$func = $reqArr[1]; 
-			$test->$func();
+			$obj->$func();
+		}else{
+			$obj->index();
 		}
 	}else{
-		@include('Controllers/BaseController.php');
-		$test = new BaseController();
-		$test->loadView("404error");
+		include('Controllers/BaseController.php');
+		$obj = new BaseController();
+		$obj->error();
 	}
 }
 
