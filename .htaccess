@@ -1,0 +1,9 @@
+#LogLevel trace8
+RewriteEngine On
+#Options FollowSymLinks
+
+#RewriteCond "%{SCRIPT_FILENAME}" !-f
+#RewriteCond "%{REQUEST_URI}" !-d
+
+RewriteRule "[^index.php]" "/myMVC/index.php"
+
